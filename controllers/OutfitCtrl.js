@@ -1,6 +1,6 @@
 "use strict";
 
-const outfitModel = require("../models/ReviewModel");
+const outfitModel = require("../models/OutfitModel");
 const userModel = require("../models/UserModel");
 const commentModel = require("../models/CommentModel");
 const likeModel = require("../models/LikeModel");
