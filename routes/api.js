@@ -4,6 +4,7 @@ const userCtrl = require("../controllers/UserCtrl");
 const imageCtrl = require("../controllers/ImageCtrl");
 const authCtrl = require("../controllers/authCtrl");
 const reviewCtrl = require("../controllers/ReviewCtrl");
+const outfitCtrl = require("../controllers/OutfitCtrl");
 
 module.exports = router => {
   //users register
@@ -18,6 +19,11 @@ module.exports = router => {
   router
     .route("/reviews/review/:id")
     .get(authCtrl.auth, reviewCtrl.reviewDetail);
+
+  //outfit 상세보기
+  router
+    .route("/outfits/outfit/:id")
+    .get(authCtrl.auth, outfitCtrl.outfitDetail);
 
   return router;
 };
