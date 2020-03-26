@@ -184,15 +184,13 @@ exports.findNameById = id => {
     const sql = "SELECT name FROM users WHERE id = ?";
 
     pool.query(sql, [id], (err, rows) => {
-      // 아이디 존재 검사
       if (err) {
         reject(err);
       } else {
         if (rows.length === 0) {
-          // 아이디 없음
-          resolve();
-        } else {
           reject(1402);
+        } else {
+          resolve(rows[0].name);
         }
       }
     });
