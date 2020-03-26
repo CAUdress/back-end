@@ -2,6 +2,7 @@
 
 const userCtrl = require("../controllers/UserCtrl");
 const imageCtrl = require("../controllers/ImageCtrl");
+const authCtrl = require("../controllers/authCtrl");
 
 module.exports = router => {
   //users register
@@ -11,6 +12,9 @@ module.exports = router => {
 
   //users login
   router.route("/users/login").post(userCtrl.login);
+
+  //review 상세보기
+  router.route("/reviews/review/:id").get(authCtrl.auth);
 
   return router;
 };

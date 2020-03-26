@@ -9,6 +9,7 @@ const userModel = require("../models/UserModel");
  *  login
  ********************/
 exports.login = async (req, res, next) => {
+  console.log(req.body.email);
   if (!req.body.email || !req.body.pw) {
     return res.status(400).end();
   }
@@ -23,6 +24,7 @@ exports.login = async (req, res, next) => {
     };
 
     result = await userModel.login(userData);
+    await userModel.updateToken(result.token, result.profile.id);
   } catch (error) {
     return next(error);
   }
@@ -48,9 +50,11 @@ exports.register = async (req, res, next) => {
       profile: req.file ? req.file.location : null
     };
 
+    await userModel.checkEmail(userData.email);
+    await userModel.checkName(userData.name);
+
     result = await userModel.register(userData);
   } catch (error) {
-    console.log(error);
     return next(error);
   }
 
