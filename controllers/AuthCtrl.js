@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const authModel = require('../models/AuthModel');
+const authModel = require("../models/AuthModel");
 
 /*******************
  *  Authenticate
@@ -9,11 +9,11 @@ exports.auth = (req, res, next) => {
   if (!req.headers.token) {
     return next(401);
   } else {
-    authModel.auth(req.headers.token, (err, userIdx) => {
+    authModel.auth(req.headers.token, (err, userId) => {
       if (err) {
         return next(err);
       } else {
-        req.userIdx = userIdx;
+        req.userId = userId;
         return next();
       }
     });

@@ -9,7 +9,6 @@ const userModel = require("../models/UserModel");
  *  login
  ********************/
 exports.login = async (req, res, next) => {
-  console.log(req.body.email);
   if (!req.body.email || !req.body.pw) {
     return res.status(400).end();
   }
