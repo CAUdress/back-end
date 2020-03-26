@@ -6,12 +6,12 @@ const resMsg = require("../errors.json");
 const reviewModel = require("../models/ReviewModel");
 const userModel = require("../models/UserModel");
 const commentModel = require("../models/CommentModel");
+const likeModel = require("../models/LikeModel");
 
 /*******************
  *  reviewDetail 리뷰상세보기
  ********************/
 exports.reviewDetail = async (req, res, next) => {
-  console.log(req.params.id);
   if (!req.params.id) {
     return res.status(400).end();
   }
@@ -28,7 +28,11 @@ exports.reviewDetail = async (req, res, next) => {
     result.review.writer = await userModel.findNameById(result.review.users_id);
     result.items = await reviewModel.review(req.params.id);
     result.comments = await commentModel.Comments(req.params.id, "review");
-    result.review.like = await reviewModel.checkLike(req.params.id, req.userId);
+    result.review.like = await likeModel.checkLike(
+      req.params.id,
+      req.userId,
+      "review"
+    );
     result.outfits = await reviewModel.reviewOutfits(req.params.id);
   } catch (error) {
     return next(error);
