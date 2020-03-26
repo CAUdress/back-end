@@ -2,7 +2,7 @@
 
 const userCtrl = require("../controllers/UserCtrl");
 const imageCtrl = require("../controllers/ImageCtrl");
-const authCtrl = require("../controllers/authCtrl");
+const authCtrl = require("../controllers/AuthCtrl");
 const reviewCtrl = require("../controllers/ReviewCtrl");
 const outfitCtrl = require("../controllers/OutfitCtrl");
 
