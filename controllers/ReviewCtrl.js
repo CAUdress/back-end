@@ -1,12 +1,12 @@
 "use strict";
 
-const config = require("../config/config");
 const resMsg = require("../errors.json");
 
 const reviewModel = require("../models/ReviewModel");
 const userModel = require("../models/UserModel");
 const commentModel = require("../models/CommentModel");
 const likeModel = require("../models/LikeModel");
+const itemModel = require("../models/ItemModel");
 
 /*******************
  *  reviewDetail 리뷰상세보기
@@ -26,7 +26,7 @@ exports.reviewDetail = async (req, res, next) => {
   try {
     result.review = await reviewModel.review(req.params.id);
     result.review.writer = await userModel.findNameById(result.review.users_id);
-    result.items = await reviewModel.review(req.params.id);
+    result.items = await itemModel.items(req.params.id, "review");
     result.comments = await commentModel.Comments(req.params.id, "review");
     result.review.like = await likeModel.checkLike(
       req.params.id,

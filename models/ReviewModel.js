@@ -25,53 +25,6 @@ exports.review = id => {
   });
 };
 
-//해당 id의 리뷰 아이템들 조회
-exports.reviewItems = id => {
-  return new Promise((resolve, reject) => {
-    const sql = "SELECT * FROM review_items WHERE review_id = ?";
-
-    pool.query(sql, [id], (err, rows) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(rows);
-      }
-    });
-  });
-};
-
-//해당 id의 리뷰 댓글 조회
-exports.reviewComments = id => {
-  return new Promise((resolve, reject) => {
-    const sql = "SELECT * FROM review_comment WHERE review_id = ?";
-
-    pool.query(sql, [id], (err, rows) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(rows);
-      }
-    });
-  });
-};
-
-//해당 id의 리뷰 공감 확인
-exports.checkLike = (reviewId, userId) => {
-  return new Promise((resolve, reject) => {
-    const sql = "SELECT id FROM review_like WHERE review_id = ? && users_id";
-
-    pool.query(sql, [reviewId, userId], (err, rows) => {
-      if (err) {
-        reject(err);
-      } else {
-        //공감눌렀으면 true 아니면 false
-        if (rows[0]) resolve(true);
-        else resolve(false);
-      }
-    });
-  });
-};
-
 //해당 id의 리뷰와 연결된 outfit
 exports.reviewOutfits = id => {
   return new Promise((resolve, reject) => {
