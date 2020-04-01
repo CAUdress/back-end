@@ -34,6 +34,7 @@ exports.login = async (req, res, next) => {
  *  Register
  ********************/
 exports.register = async (req, res, next) => {
+  console.log(req.body);
   let result = "";
 
   try {

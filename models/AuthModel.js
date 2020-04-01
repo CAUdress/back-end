@@ -12,6 +12,7 @@ const config = require("../config/config");
  *  Authenticate
  *  @param: token
  ********************/
+//TODO token 검사 다시 생각해보기
 exports.auth = (token, done) => {
   jwt.verify(token, config.jwt.cert, (err, decoded) => {
     if (err) {
