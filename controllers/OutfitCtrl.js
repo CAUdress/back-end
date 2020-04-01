@@ -37,3 +37,29 @@ exports.outfitDetail = async (req, res, next) => {
   }
   return res.r(result);
 };
+
+exports.like = async (req, res, next) => {
+  if (!req.body.id || req.body.userId) {
+    return res.status(400).end();
+  }
+
+  try {
+    await likeModel.like(req.body.id, req.userId, "outfit");
+  } catch (error) {
+    return next(error);
+  }
+  return res.r();
+};
+
+exports.unlike = async (req, res, next) => {
+  if (!req.body.id || req.body.userId) {
+    return res.status(400).end();
+  }
+
+  try {
+    await likeModel.unlike(req.body.id, req.userId, "outfit");
+  } catch (error) {
+    return next(error);
+  }
+  return res.r();
+};

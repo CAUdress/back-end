@@ -39,3 +39,31 @@ exports.reviewDetail = async (req, res, next) => {
   }
   return res.r(result);
 };
+
+//review 좋아요
+exports.like = async (req, res, next) => {
+  if (!req.body.id || req.body.userId) {
+    return res.status(400).end();
+  }
+
+  try {
+    await likeModel.like(req.body.id, req.userId, "review");
+  } catch (error) {
+    return next(error);
+  }
+  return res.r();
+};
+
+//review 좋아요 취소
+exports.unlike = async (req, res, next) => {
+  if (!req.body.id || req.body.userId) {
+    return res.status(400).end();
+  }
+
+  try {
+    await likeModel.unlike(req.body.id, req.userId, "review");
+  } catch (error) {
+    return next(error);
+  }
+  return res.r();
+};
