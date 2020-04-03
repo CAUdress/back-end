@@ -86,11 +86,13 @@ exports.post = async (req, res, next) => {
   try {
     //작성
     review_id = await reviewModel.post(postData);
-    for (let i = 0; i < req.body.items.length; i++) {
-      items[i] = req.body.items[i];
-      items[i].users_id = req.userId;
-      items[i].review_id = review_id;
-    }
+    if (req.body.items)
+      for (let i = 0; i < req.body.items.length; i++) {
+        items[i] = [];
+        items[i][0] = req.body.items[i].item;
+        items[i][1] = parseInt(req.body.items[i].score);
+        items[i][2] = review_id;
+      }
     await reviewModel.postItems(items);
     if (req.body.outfit)
       await reviewModel.connectOutfit(req.body.outfit, review_id);

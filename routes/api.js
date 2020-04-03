@@ -20,6 +20,8 @@ module.exports = router => {
     .route("/reviews/review/:id")
     .get(authCtrl.auth, reviewCtrl.reviewDetail);
 
+  router.route("/reviews/post").post(authCtrl.auth, reviewCtrl.post);
+
   //review 좋아요
   router.route("/reviews/like/:id").get(authCtrl.auth, reviewCtrl.like);
 

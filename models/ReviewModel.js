@@ -43,14 +43,14 @@ exports.reviewOutfits = id => {
 exports.post = postData => {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO reviews(comment, date, brand, size, product, users_id) " +
+      "INSERT INTO review(comment, date, brand, size, product, users_id) " +
       "VALUES (?, ?, ?, ?, ?, ?) ";
 
     pool.query(
       sql,
       [
         postData.comment,
-        dateCtrl.date,
+        "날짜날짜",
         postData.brand,
         postData.size,
         postData.product,
@@ -61,7 +61,7 @@ exports.post = postData => {
         if (err) {
           reject(err);
         } else {
-          resolve(rows[0].id);
+          resolve(rows.insertId);
         }
       }
     );
@@ -71,10 +71,8 @@ exports.post = postData => {
 exports.postItems = items => {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO reviews_items (item, score, review_id) " + "VALUES ? ";
-
-    pool.query(sql, items, (err, rows) => {
-      // 가입 시도
+      "INSERT INTO review_items (item, score, review_id) " + "VALUES  ? ";
+    pool.query(sql, [items], (err, rows) => {
       if (err) {
         reject(err);
       } else {
@@ -90,7 +88,6 @@ exports.connectOutfit = (outfitId, review_id) => {
       "INSERT INTO review_outfit (outfit_id, review_id) " + "VALUES (?, ?) ";
 
     pool.query(sql, [outfitId, review_id], (err, rows) => {
-      // 가입 시도
       if (err) {
         reject(err);
       } else {
