@@ -78,26 +78,16 @@ exports.post = async (req, res, next) => {
     brand: req.body.brand ? req.body.brand : null,
     size: req.body.size ? req.body.size : null,
     product: req.body.product,
-    users_id: req.userId
+    users_id: req.userId,
+    outfit: req.body.outfit ? req.body.outfit : 0,
+    items: req.body.items ? req.body.items : []
   };
-  let items = [];
-  let review_id;
 
   try {
-    //작성
-    review_id = await reviewModel.post(postData);
-    if (req.body.items)
-      for (let i = 0; i < req.body.items.length; i++) {
-        items[i] = [];
-        items[i][0] = req.body.items[i].item;
-        items[i][1] = parseInt(req.body.items[i].score);
-        items[i][2] = review_id;
-      }
-    await reviewModel.postItems(items);
-    if (req.body.outfit)
-      await reviewModel.connectOutfit(req.body.outfit, review_id);
-  } catch (error) {
-    return next(error);
+    await reviewModel.postAuto(postData);
+  } catch (err) {
+    return next(err);
   }
+
   return res.r();
 };

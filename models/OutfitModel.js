@@ -18,7 +18,6 @@ exports.outfit = id => {
           //게시물 id가 맞지않음
           reject(1700);
         } else {
-          console.log(rows);
           resolve(rows[0]);
         }
       }
@@ -35,6 +34,26 @@ exports.outfitReviews = id => {
     pool.query(sql, [id], (err, rows) => {
       if (err) reject(err);
       else resolve(rows);
+    });
+  });
+};
+
+exports.outfitCheckId = context => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT id FROM outfit WHERE id = ?";
+
+    context.conn.query(sql, [context.data.outfit], (err, rows) => {
+      if (err) {
+        context.error = err;
+        reject(context);
+      } else {
+        if (rows.length === 0) {
+          context.error = 1700;
+          reject(context);
+        } else {
+          resolve(context);
+        }
+      }
     });
   });
 };
