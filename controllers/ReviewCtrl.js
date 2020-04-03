@@ -67,3 +67,35 @@ exports.unlike = async (req, res, next) => {
   }
   return res.r();
 };
+
+exports.post = async (req, res, next) => {
+  //TODO 필수정보 확인 후 수정
+  if (!req.body.product) {
+    return res.status(400).end();
+  }
+  let postData = {
+    comment: req.body.comment ? req.body.comment : null,
+    brand: req.body.brand ? req.body.brand : null,
+    size: req.body.size ? req.body.size : null,
+    product: req.body.product,
+    users_id: req.userId
+  };
+  let items = [];
+  let review_id;
+
+  try {
+    //작성
+    review_id = await reviewModel.post(postData);
+    for (let i = 0; i < req.body.items.length; i++) {
+      items[i] = req.body.items[i];
+      items[i].users_id = req.userId;
+      items[i].review_id = review_id;
+    }
+    await reviewModel.postItems(items);
+    if (req.body.outfit)
+      await reviewModel.connectOutfit(req.body.outfit, review_id);
+  } catch (error) {
+    return next(error);
+  }
+  return res.r();
+};
